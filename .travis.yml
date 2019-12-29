@@ -4,7 +4,7 @@ services: docker
 
 env:
   global:
-    - ROLE_NAME: projectname
+    - ROLE_NAME: telegraf
   matrix:
     - MOLECULE_DISTRO: centos7
     - MOLECULE_DISTRO: centos6
