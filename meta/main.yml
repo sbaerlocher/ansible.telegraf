@@ -1,32 +1,22 @@
 ---
 galaxy_info:
   role_name: telegraf
-  author:
-  description:
-  company:
+  author: Simon Baerlocher <s.baerlocher@sbaerlocher.ch>
+  description: Installs and configures the telegraf.
   license: MIT
-  min_ansible_version: 2.8
+  min_ansible_version: 2.9
   platforms:
-    - name: EL
-      versions:
-        - 6
-        - 7
-    - name: Fedora
-      versions:
-        - 29
     - name: Ubuntu
       versions:
-        - bionic
-        - cosmic
+        - all
     - name: Debian
       versions:
-        - jessie
-        - stretch
-        - buster
+        - all
     - name: Windows
       versions:
         - all
 
-  galaxy_tags: []
+  galaxy_tags:
+    - monitoring
 
 dependencies: []

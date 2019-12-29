@@ -1,0 +1,17 @@
+---
+# tasks file for sbaerlocher.telegraf
+
+- name: 'version : search'
+  uri:
+    url: https://release-monitoring.org/api/project/58058
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+  register: register_telegraf_version
+  delegate_to: localhost
+
+- name: 'version : set version {{ register_telegraf_version.json.version | default(telegraf_version) }}'
+  set_fact:
+    telegraf_version: '{{ register_telegraf_version.json.version }}'
+  delegate_to: localhost

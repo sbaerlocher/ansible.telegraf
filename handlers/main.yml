@@ -1,2 +1,22 @@
 ---
 # handlers file for sbaerlocher.telegraf
+
+- name: 'Restart Telegraf'
+  become: true
+  service:
+    name: telegraf
+    state: restarted
+    enabled: true
+  when: not telegraf_container
+
+- name: 'Restart Telegraf container'
+  docker_container:
+    name: telegraf
+    restart: true
+  when: telegraf_container
+
+- name: 'Restart Windows Telegraf'
+  win_service:
+    name: Telegraf
+    start_mode: auto
+    state: restarted
