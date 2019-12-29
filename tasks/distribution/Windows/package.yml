@@ -1,0 +1,28 @@
+---
+# tasks file for sbaerlocher.telegraf
+
+- name: 'windows : Create directory structure'
+  win_file:
+    path: '{{ item }}'
+    state: directory
+  with_items:
+    - '{{ telegraf_directory }}'
+    - '{{ telegraf_include }}'
+
+- name: 'windows : check if file is already downloaded'
+  win_stat:
+    path: '{{ telegraf_directory }}\telegraf-{{ telegraf_version }}_windows_amd64.zip'
+  register: file_info
+
+- name: 'windows : download Telegraf Agent Zip file'
+  win_get_url:
+    url: https://dl.influxdata.com/telegraf/releases/telegraf-{{ telegraf_version }}_windows_amd64.zip
+    dest: '{{ telegraf_directory }}\telegraf-{{ telegraf_version }}_windows_amd64.zip'
+  when:
+    - not file_info.stat.exists
+
+- name: 'windows : unzip file'
+  win_unzip:
+    src: '{{ telegraf_directory }}\telegraf-{{ telegraf_version }}_windows_amd64.zip'
+    dest: '{{ telegraf_directory }}'
+    creates: '{{ telegraf_directory }}\telegraf.exe'

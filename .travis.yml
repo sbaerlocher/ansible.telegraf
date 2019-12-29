@@ -4,13 +4,10 @@ services: docker
 
 env:
   global:
-    - ROLE_NAME: projectname
+    - ROLE_NAME: telegraf
   matrix:
     - MOLECULE_DISTRO: centos7
     - MOLECULE_DISTRO: centos6
-    - MOLECULE_DISTRO: ubuntu1804
-    - MOLECULE_DISTRO: debian9
-    - MOLECULE_DISTRO: debian10
 
 install:
   - pip install molecule docker
@@ -19,8 +16,8 @@ install:
 
 before_script:
   - cd ../
-  - mv ansible.$ROLE_NAME projectgroup.$ROLE_NAME
-  - cd projectgroup.$ROLE_NAME
+  - mv ansible.$ROLE_NAME sbaerlocher.$ROLE_NAME
+  - cd sbaerlocher.$ROLE_NAME
 
 script:
   - molecule test

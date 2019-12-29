@@ -1,0 +1,38 @@
+---
+# tasks file for sbaerlocher.telegraf
+
+- name: 'debian : install APT HTTPS transport'
+  become: true
+  apt:
+    name: 'apt-transport-https'
+    state: present
+  register: register_telegraf_dependencies_packages_installed
+  until: register_telegraf_dependencies_packages_installed is succeeded
+
+- name: 'debian : download Telegraf apt key'
+  become: true
+  apt_key:
+    url: 'https://repos.influxdata.com/influxdb.key'
+    id: 2582E0C5
+    state: present
+  register: register_telegraf_dependencies_keys_installed
+  until: register_telegraf_dependencies_keys_installed is succeeded
+
+- name: 'debian : add Telegraf repository'
+  become: true
+  apt_repository:
+    repo: 'deb https://repos.influxdata.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable'
+    filename: 'telegraf'
+    state: present
+
+- name: 'debian : Install Telegraf package'
+  become: true
+  apt:
+    name: '{{ telegraf_package }}'
+    update_cache: true
+  register: register_telegraf_package_installed
+  until: register_telegraf_package_installed is succeeded
+  notify: 'Restart Telegraf'
+
+- name: 'debian : include configuration tasks'
+  include_tasks: 'Linux/configuration.yml'

@@ -19,9 +19,17 @@
     distribution: '{{ ansible_distribution }}'
     distribution_version: '{{ ansible_distribution_version }}'
     distribution_major_version: '{{ ansible_distribution_major_version }}'
+  when: not telegraf_container | bool
   tags:
     - configuration
     - packages
+
+- name: include docker variables
+  include_vars: 'docker.yml'
+  when: telegraf_container | bool
+
+- include_tasks: version.yml
+  when: telegraf_version is undefined
 
 - name: include distribution tasks
   include_tasks: '{{ loop_distribution }}'
@@ -41,6 +49,11 @@
     distribution: '{{ ansible_distribution }}'
     distribution_version: '{{ ansible_distribution_version }}'
     distribution_major_version: '{{ ansible_distribution_major_version }}'
+  when: telegraf_version is undefined or not telegraf_container | bool
   tags:
     - configuration
     - packages
+
+- name: include docker tasks
+  include_tasks: 'distribution/Linux/docker.yml'
+  when: telegraf_container | bool

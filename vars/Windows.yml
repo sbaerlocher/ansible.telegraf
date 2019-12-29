@@ -1,0 +1,115 @@
+---
+# vars file for sbaerlocher.telegraf
+
+telegraf_directory: 'C:\\Program Files\\telegraf'
+
+telegraf_logfile: '{{ telegraf_directory }}\\telegraf.log'
+telegraf_include: '{{ telegraf_directory }}\\telegraf.d'
+telegraf_service_args:
+  - --service install
+  - --config "{{ telegraf_directory }}\\telegraf.conf"
+  - --config-directory "{{ telegraf_include }}"
+
+telegraf_inputs_default:
+  - input: cpu
+    config:
+      - percpu = false
+      - totalcpu = true
+      - collect_cpu_time = true
+      - fielddrop =
+        ["time_guest","time_guest_nice","time_irq","time_nice","time_softirq","time_steal","usage_guest","usage_guest_nice","usage_irq","usage_nice","usage_softirq","usage_steal"]
+      - interval = "2s"
+  - input: disk
+  - input: io
+  - input: mem
+  - input: net
+  - input: system
+  - input: swap
+  - input: netstat
+  - input: net
+  - input: mem
+  - input: win_perf_counters
+    config:
+      - UsePerfCounterTime = true
+    objects:
+      - name: Processor
+        measurement: win_cpu
+        counters:
+          - '% Idle Time'
+          - '% Interrupt Time'
+          - '% Privileged Time'
+          - '% User Time'
+          - '% Processor Time'
+          - '% DPC Time'
+        total: true
+      - name: LogicalDisk
+        measurement: win_disk
+        counters:
+          - '% Idle Time'
+          - '% Disk Time'
+          - '% Disk Read Time'
+          - '% Disk Write Time'
+          - '% Free Space'
+          - 'Current Disk Queue Length'
+          - 'Free Megabytes'
+      - name: LogicalDisk
+        measurement: win_diskio
+        counters:
+          - 'Disk Read Bytes/sec'
+          - 'Disk Write Bytes/sec'
+          - 'Current Disk Queue Length'
+          - 'Disk Reads/sec'
+          - 'Disk Writes/sec'
+          - '% Disk Time'
+          - '% Disk Read Time'
+          - '% Disk Write Time'
+      - name: 'Network Interface'
+        measurement: win_net
+        counters:
+          - 'Bytes Received/sec'
+          - 'Bytes Sent/sec'
+          - 'Packets Received/sec'
+          - 'Packets Sent/sec'
+          - 'Packets Received Discarded'
+          - 'Packets Outbound Discarded'
+          - 'Packets Received Errors'
+          - 'Packets Outbound Errors'
+      - name: System
+        measurement: win_system
+        instances: ['------']
+        counters:
+          - 'Context Switches/sec'
+          - 'System Calls/sec'
+          - 'Processor Queue Length'
+          - 'Threads'
+          - 'System Up Time'
+          - 'Processes'
+      - name: Memory
+        measurement: win_mem
+        instances: ['------']
+        counters:
+          - 'Available Bytes'
+          - 'Cache Faults/sec'
+          - 'Demand Zero Faults/sec'
+          - 'Page Faults/sec'
+          - 'Pages/sec'
+          - 'Transition Faults/sec'
+          - 'Pool Nonpaged Bytes'
+          - 'Pool Paged Bytes'
+          - 'Standby Cache Reserve Bytes'
+          - 'Standby Cache Normal Priority Bytes'
+          - 'Standby Cache Core Bytes'
+      - name: 'Paging File'
+        measurement: win_swap
+        instances: ['_Total']
+        counters:
+          - '% Usage'
+      - name: Process
+        measurement: win_proc
+        counters:
+          - '% Processor Time'
+          - 'Handle Count'
+          - 'Private Bytes'
+          - 'Thread Count'
+          - 'Virtual Bytes'
+          - 'Working Set'

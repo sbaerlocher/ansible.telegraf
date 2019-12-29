@@ -1,0 +1,36 @@
+---
+# tasks file for sbaerlocher.telegraf
+
+- name: 'Create /etc/telegraf (home) directory'
+  become: true
+  file:
+    path: /etc/telegraf
+    mode: 0750
+    state: directory
+
+- name: Create /etc/telegraf.d directory
+  become: true
+  file:
+    path: /etc/telegraf/telegraf.d
+    mode: 0750
+    state: directory
+
+- name: 'Copy the template for versions >= 0.10.0'
+  become: true
+  template:
+    src: telegraf.conf.j2
+    dest: '{{ telegraf_directory }}/telegraf.conf'
+    mode: 0640
+  when:
+    - telegraf_version is version_compare('0.10.0', '>=')
+  notify:
+    - Restart Telegraf
+    - Restart Telegraf container
+
+- name: "Start Telegraf (If it wasn't running)"
+  become: true
+  service:
+    name: telegraf
+    state: started
+    enabled: true
+  when: not telegraf_container

@@ -1,0 +1,29 @@
+---
+# vars file for sbaerlocher.telegraf
+
+telegraf_directory: '/etc/telegraf'
+
+telegraf_logfile: '{{ telegraf_directory }}/telegraf.log'
+telegraf_include: '{{ telegraf_directory }}/telegraf.d'
+
+telegraf_inputs_default:
+  - input: cpu
+    config:
+      - percpu = false
+      - totalcpu = true
+      - collect_cpu_time = true
+      - fielddrop =
+        ["time_guest","time_guest_nice","time_irq","time_nice","time_softirq","time_steal","usage_guest","usage_guest_nice","usage_irq","usage_nice","usage_softirq","usage_steal"]
+      - interval = "2s"
+  - input: disk
+    config:
+      - ignore_fs = ["tmpfs", "devtmpfs"]
+  - input: io
+  - input: mem
+  - input: net
+  - input: system
+  - input: swap
+  - input: netstat
+  - input: net
+  - input: mem
+  - input: processes

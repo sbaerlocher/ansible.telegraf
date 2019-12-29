@@ -1,2 +1,41 @@
 ---
 # tasks file for sbaerlocher.telegraf
+
+- name: 'windows : check if choco exist'
+  win_stat:
+    path: "C:\\ProgramData\\Chocolatey\\bin\\choco.exe"
+  register: register_telegraf_choco_check
+
+- name: 'windows : set install type choco'
+  set_fact:
+    telegraf_install_type: 'choco'
+  when: >
+    register_telegraf_choco_check.stat.exists and
+    not telegraf_force_package
+
+- name: 'windows : include install type'
+  include_tasks: 'Windows/{{ var_filename }}.yml'
+  vars:
+    var_filename: "{{ telegraf_install_type | default('package') }}"
+
+- name: 'windows : configure Telegraf'
+  win_template:
+    src: 'telegraf.conf.j2'
+    dest: '{{ telegraf_directory }}\\telegraf.conf'
+  notify:
+    - 'Restart Windows Telegraf'
+
+- name: 'windows : check if a service is installed'
+  win_service:
+    name: telegraf
+  register: register_telegraf_service
+
+- name: 'windows : register service'
+  win_command: '"{{ telegraf_directory }}\telegraf.exe" {{ telegraf_service_args | join(" ") }}'
+  when: not register_telegraf_service.exists
+
+- name: 'windows : set service startup mode to auto and ensure it is started'
+  win_service:
+    name: Telegraf
+    start_mode: auto
+    state: started
