@@ -1,6 +1,9 @@
 # Ansible Role: telegraf
 
-[![Build Status](https://img.shields.io/travis/sbaerlocher/ansible.telegraf.svg?branch=master&style=popout-square)](https://travis-ci.org/sbaerlocher/ansible.telegraf) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=popout-square)](https://sbaerlo.ch/licence) [![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-telegraf-blue.svg?style=popout-square)](https://galaxy.ansible.com/sbaerlocher/telegraf) [![Ansible Role](https://img.shields.io/ansible/role/d/id.svg?style=popout-square)](https://galaxy.ansible.com/sbaerlocher/telegraf)
+[![Build Status](https://img.shields.io/travis/com/sbaerlocher/ansible.telegraf?branch=master&style=popout-square)](https://travis-ci.org/sbaerlocher/ansible.telegraf)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=popout-square)](https://sbaerlo.ch/licence)
+[![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-telegraf-blue.svg?style=popout-square)](https://galaxy.ansible.com/sbaerlocher/telegraf)
+[![Ansible Role](https://img.shields.io/ansible/role/d/45509.svg?style=popout-square)](https://galaxy.ansible.com/sbaerlocher/telegraf)
 
 ## Description
 
