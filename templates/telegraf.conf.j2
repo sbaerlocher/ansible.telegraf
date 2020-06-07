@@ -66,21 +66,21 @@
 {% endfor %}
 {% endif %}
 {% if item.tags is defined and item.tags is iterable %}
-[inputs.{{ item.input }}.tags]
+    [inputs.{{ item.input }}.tags]
 {% for items in item.tags %}
-    {{ items }}
+        {{ items }}
 {% endfor %}
 {% endif %}
 {% if item.tagpass is defined and item.tagpass is iterable %}
-[inputs.{{ item.input }}.tagpass]
+    [inputs.{{ item.input }}.tagpass]
 {% for items in item.tagpass %}
-    {{ items }}
+        {{ items }}
 {% endfor %}
 {% endif %}
 {% if item.tagdrop is defined and item.tagdrop is iterable %}
-[inputs.{{ item.input }}.tagdrop]
+    [inputs.{{ item.input }}.tagdrop]
 {% for items in item.tagdrop %}
-    {{ items }}
+        {{ items }}
 {% endfor %}
 {% endif %}
 {% if item.objects is defined and item.objects is iterable %}
@@ -113,6 +113,18 @@
 {% if item.config is defined and item.config is iterable %}
 {% for items in item.config %}
     {{ items }}
+{% endfor %}
+{% endif %}
+{% if item.tags is defined and item.tags is iterable %}
+    [processors.{{ item.processor }}.tags]
+{% for items in item.tags %}
+        {{ items }}
+{% endfor %}
+{% endif %}
+{% if item.fields is defined and item.fields is iterable %}
+    [processors.{{ item.processor }}.fields]
+{% for items in item.fields %}
+        {{ items }}
 {% endfor %}
 {% endif %}
 {% endfor %}
