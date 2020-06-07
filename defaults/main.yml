@@ -54,6 +54,22 @@ telegraf_output:
 
 telegraf_inputs: '{{ telegraf_inputs_default }}'
 
+# telegraf_aggregators:
+#   - aggregator: histogram
+#     config:
+#       - period = "30s"
+#       - drop_original = false
+#     subconfig:
+#       - measurement_name = "just for example"
+
+# telegraf_processors:
+#   - processor: converter
+#     config:
+#       - order = 2
+#       - namepass = "example"
+#     tags:
+#       - name = "example"
+
 # Whether to force installation by package, i.e ignore existing choco by Windows
 telegraf_force_package: false
 

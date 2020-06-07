@@ -104,7 +104,7 @@
 {% endif %}
 
 ###############################################################################
-#                                  PROCESSORS                                    #
+#                                  PROCESSORS                                 #
 ###############################################################################
 
 {% if telegraf_processors is defined and telegraf_processors is iterable %}
@@ -124,6 +124,28 @@
 {% if item.fields is defined and item.fields is iterable %}
     [processors.{{ item.processor }}.fields]
 {% for items in item.fields %}
+        {{ items }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+###############################################################################
+#                            AGGREGATORS PLUGINS                               #
+###############################################################################
+
+{% if telegraf_aggregators is defined and telegraf_aggregators is iterable %}
+{% for item in telegraf_aggregators %}
+[[aggregators.{{ item.aggregator }}]]
+{% if item.config is defined and item.config is iterable %}
+{% for items in item.config %}
+    {{ items }}
+{% endfor %}
+{% endif %}
+{% if item.subconfig is defined and item.subconfig is iterable %}
+    [[aggregators.{{ item.aggregator }}.config]]
+{% for items in item.subconfig %}
         {{ items }}
 {% endfor %}
 {% endif %}
